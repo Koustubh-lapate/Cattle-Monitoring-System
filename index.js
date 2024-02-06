@@ -98,3 +98,7 @@ app.post('/user/login', async (req, res) => {
         res.status(403).json({message: 'Invalid useremail or password'});
     }
 });
+
+app.listen(port, () => {
+    console.log('Cattle Monitoring System backend server listening on port 3000');
+});
