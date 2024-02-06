@@ -64,3 +64,25 @@ app.get('user/me', authenticateJwt, (req, res) => {
         username: username
     });
 });
+
+app.post('/user/signup', (req, res) => {
+    const {username, useremail, password} = req.body;
+
+    function callback(user){
+        if(user){
+            res.status(403).json({message: 'User already exists'});
+        }
+
+        else{
+            const obj = {username: username, useremail: useremail, password: password};
+            const newUser = new User(obj);
+            newUser.save();
+            const token = sign({useremail, role: 'user'}, secret, {expiresIn: '1h'});
+            res.json({message: 'User created successfully', token});
+        }
+    }
+
+    User.findOne({useremail}).then(callback);
+});
+
+app.post()
