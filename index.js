@@ -85,4 +85,16 @@ app.post('/user/signup', (req, res) => {
     User.findOne({useremail}).then(callback);
 });
 
-app.post()
+app.post('/user/login', async (req, res) => {
+    const {useremail, password} = req.body;
+    const user = await User.findOne({useremail, password});
+
+    if(user){
+        const token = sign({useremail, role: 'user'}, secret, {expiresIn: '1h'});
+        res.json({message: 'User logged in successfully', token});
+    }
+
+    else{
+        res.status(403).json({message: 'Invalid useremail or password'});
+    }
+});
