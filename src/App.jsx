@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Signup from "./Signup";
 import Signin from "./Signin";
 import Appbar from "./Appbar";
+import Menu from "./Menu";
 
 function App(){
     return(
