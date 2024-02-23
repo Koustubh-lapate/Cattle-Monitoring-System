@@ -59,9 +59,11 @@ connect('mongodb+srv://koustubhlap:kond018@koustubh18.qmw1c9a.mongodb.net/', {db
 //routes
 app.get('user/me', authenticateJwt, (req, res) => {
     const username = req.user.username;
+    const useremail = req.user.useremail;
 
     res.json({
-        username: username
+        username: username,
+        useremail: useremail
     });
 });
 

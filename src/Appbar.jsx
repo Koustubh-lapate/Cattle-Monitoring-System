@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 function Appbar(){
     const navigate = useNavigate();
     const [username, setUsername] = useState(null);
+    const [email, setEmail] = useState(null);
 
     useEffect(() => {
         fetch("http://localhost:3000/user/me", {
@@ -18,13 +19,14 @@ function Appbar(){
             return resp.json().then((data) => {
                 if(data.useremail){
                     setUsername(data.username);
+                    setEmail(data.useremail);
                 }
             })
         })
 
     }, [])
 
-    if(username){
+    if(email){
         return <div style={{
             display: "flex",
             justifyContent: "space-between",
