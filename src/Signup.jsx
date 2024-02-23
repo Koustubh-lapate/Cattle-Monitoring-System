@@ -84,7 +84,7 @@ function Signup(){
                             }
 
                         }).then((resp) => {
-                            resp.json().then((data) => {
+                            return resp.json().then((data) => {
                                 localStorage.setItem("token", data.token);
                                 window.location = "/menu";
                             })
