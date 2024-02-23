@@ -18,7 +18,6 @@ const secret = 'my-secret-key';
 //define mongoose schemas
 const userSchema = new Schema({
     username: String,
-    useremail: String,
     password: String
 });
 
@@ -58,15 +57,15 @@ connect('mongodb+srv://koustubhlap:kond018@koustubh18.qmw1c9a.mongodb.net/', {db
 
 //routes
 app.get('user/me', authenticateJwt, (req, res) => {
-    const useremail = req.user.useremail;
+    const username = req.user.username;
 
     res.json({
-        useremail: useremail
+        username: username
     });
 });
 
 app.post('/user/signup', (req, res) => {
-    const {username, useremail, password} = req.body;
+    const {username, password} = req.body;
 
     function callback(user){
         if(user){
@@ -74,23 +73,23 @@ app.post('/user/signup', (req, res) => {
         }
 
         else{
-            const obj = {username: username, useremail: useremail, password: password};
+            const obj = {username: username, password: password};
             const newUser = new User(obj);
             newUser.save();
-            const token = sign({useremail, role: 'user'}, secret, {expiresIn: '1h'});
+            const token = sign({username, role: 'user'}, secret, {expiresIn: '1h'});
             res.json({message: 'User created successfully', token});
         }
     }
 
-    User.findOne({useremail}).then(callback);
+    User.findOne({username}).then(callback);
 });
 
 app.post('/user/login', async (req, res) => {
-    const {useremail, password} = req.body;
-    const user = await User.findOne({useremail, password});
+    const {username, password} = req.body;
+    const user = await User.findOne({username, password});
 
     if(user){
-        const token = sign({useremail, role: 'user'}, secret, {expiresIn: '1h'});
+        const token = sign({username, role: 'user'}, secret, {expiresIn: '1h'});
         res.json({message: 'User logged in successfully', token});
     }
 

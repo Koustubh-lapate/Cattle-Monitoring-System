@@ -1,8 +1,10 @@
-import { Button, TextField, Typography, Card } from "@mui/material";
+import Card from "@mui/material/Card";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import { Typography } from "@mui/material";
 import { useState } from "react";
 
 function Signup(){
-    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -16,7 +18,7 @@ function Signup(){
             }}>
 
                 <Typography variant="h6">
-                    <b>Welcome to Cattle Monitoring System! Sign Up below</b>
+                <b>Welcome to Cattle Monitoring System! Sign Up below</b>
                 </Typography>
 
             </div>
@@ -27,55 +29,41 @@ function Signup(){
                     width: 400,
                     padding: 20,
                 }}>
-
-                    <TextField
-                    fullWidth={true}
-                    label="Enter Your Name"
-
-                    onChange={(e) => {
-                        setUsername(e.target.value)
-                    }}
-
-                    variant="outlined" />
-
-                    <br/><br/>
-
-                    <TextField
-                    fullWidth={true}
-                    label="Enter Your Email"
+                    <TextField 
+                    fullWidth={true} 
+                    label="Email" 
 
                     onChange={(e) => {
                         setEmail(e.target.value)
                     }}
 
                     variant="outlined" />
-
+                    
                     <br/><br/>
-
-                    <TextField
-                    fullWidth={true}
-                    label="Enter Password"
-
+                    
+                    <TextField 
+                    fullWidth={true} 
+                    label="Password" 
+                    
                     onChange={(e) => {
                         setPassword(e.target.value)
                     }}
 
-                    variant="outlined"
+                    variant="outlined" 
                     type="password" />
-
+                    
                     <br/><br/>
 
-                    <Button
-                    size="large"
+                    <Button 
+                    size="large" 
                     variant="contained"
-
+                    
                     onClick={() => {
                         fetch("http://localhost:3000/user/signup", {
                             method: "POST",
-
+                            
                             body: JSON.stringify({
-                                username: username,
-                                useremail: email,
+                                username: email,
                                 password: password
                             }),
 
@@ -90,13 +78,13 @@ function Signup(){
                             })
                         })
                     }}
-
+                    
                     >Sign Up</Button>
-
+                
                 </Card>
 
             </div>
-
+        
         </div>
     )
 }

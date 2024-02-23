@@ -1,4 +1,7 @@
-import { Button, Card, TextField, Typography } from "@mui/material";
+import Card from "@mui/material/Card";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import { Typography } from "@mui/material";
 import { useState } from "react";
 
 function Signin(){
@@ -7,7 +10,6 @@ function Signin(){
 
     return(
         <div>
-
             <div style={{
                 paddingTop: 100,
                 marginBottom: 10,
@@ -16,7 +18,7 @@ function Signin(){
             }}>
 
                 <Typography variant="h6">
-                    <b>Welcome Back! Sign In below</b>
+                <b>Welcome Back! Sign In below</b>
                 </Typography>
 
             </div>
@@ -27,49 +29,46 @@ function Signin(){
                     width: 400,
                     padding: 20,
                 }}>
-
-                    <TextField
-                    fullWidth={true}
-                    id="outlined-basic"
+                    <TextField 
+                    fullWidth={true} 
+                    id="outlined-basic" 
                     onChange={(e) => {
                         setEmail(e.target.value);
                     }}
 
-                    label="Enter Your Email"
+                    label="Email" 
                     variant="outlined" />
-
                     <br/><br/>
-
-                    <TextField
-                    fullWidth={true}
+                    
+                    <TextField 
+                    fullWidth={true} 
                     id="outlined-basic"
                     onChange={(e) => {
                         setPassword(e.target.value);
                     }}
-
-                    label="Enter Password"
-                    variant="outlined"
+                    
+                    
+                    label="Password" 
+                    variant="outlined" 
                     type="password" />
-
                     <br/><br/>
 
-                    <Button
-                    size="large"
+                    <Button 
+                    size="large" 
                     variant="contained"
-
+                    
                     onClick={() => {
                         fetch("http://localhost:3000/user/login", {
                             method: "POST",
-
+                            
                             body: JSON.stringify({
-                                "useremail": email,
+                                "username": email,
                                 "password": password,
                             }),
-
+                            
                             headers: {
                                 "Content-type": "application/json"
                             }
-
                         }).then((resp) => {
                             return resp.json().then((data) => {
                                 localStorage.setItem("token", data.token);
@@ -79,11 +78,11 @@ function Signin(){
                     }}
 
                     >Sign In</Button>
-
+                
                 </Card>
 
             </div>
-
+        
         </div>
     )
 }
