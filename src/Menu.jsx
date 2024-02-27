@@ -6,13 +6,13 @@ function Menu(){
     return <div>
     <div
       style={{
-        paddingTop: 100,
+        paddingTop: 60,
         marginBottom: 10,
         display: 'flex',
         justifyContent: 'center',
       }}
     >
-      <Typography variant="h6">
+      <Typography variant="h4">
         <b>Menu</b>
       </Typography>
     </div>
