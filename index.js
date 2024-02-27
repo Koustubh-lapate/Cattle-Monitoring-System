@@ -56,7 +56,7 @@ const authenticateJwt = (req, res, next) => {
 connect('mongodb+srv://koustubhlap:kond018@koustubh18.qmw1c9a.mongodb.net/', {dbName: "Cattle"});
 
 //routes
-app.get('admin/me', authenticateJwt, (req, res) => {
+app.get('/admin/me', authenticateJwt, (req, res) => {
     const username = req.user.username;
 
     res.json({
