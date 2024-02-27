@@ -29,7 +29,7 @@ const cowSchema = new Schema({
 });
 
 //define mongoose models
-const Admin = model('User', userSchema);
+const Admin = model('Admin', adminSchema);
 const Cow = model('Cow', cowSchema);
 
 const authenticateJwt = (req, res, next) => {
