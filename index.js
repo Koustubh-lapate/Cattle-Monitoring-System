@@ -53,7 +53,7 @@ const authenticateJwt = (req, res, next) => {
 }
 
 //Connect to MongoDB
-connect('mongodb+srv://koustubhlap:kond018@koustubh18.qmw1c9a.mongodb.net/', {dbName: "CattleMonitoringSystem"});
+connect('mongodb+srv://koustubhlap:kond018@koustubh18.qmw1c9a.mongodb.net/', {dbName: "Cattle"});
 
 //routes
 app.get('admin/me', authenticateJwt, (req, res) => {
@@ -64,7 +64,7 @@ app.get('admin/me', authenticateJwt, (req, res) => {
     });
 });
 
-app.post('/user/signup', (req, res) => {
+app.post('/admin/signup', (req, res) => {
     const {username, password} = req.body;
 
     function callback(admin){

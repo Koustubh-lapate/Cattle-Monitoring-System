@@ -7,6 +7,38 @@ import { useState } from "react";
 function Signin(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const handleSignIn = () => {
+        // Reset error state
+        setError("");
+
+        // Perform sign-in request
+        fetch("http://localhost:3000/admin/login", {
+            method: "POST",
+            body: JSON.stringify({
+                username: email,
+                password: password
+            }),
+            headers: {
+                "Content-type": "application/json"
+            }
+        })
+        .then((resp) => {
+            if (!resp.ok) {
+                throw new Error("Sign-in failed");
+            }
+            return resp.json();
+        })
+        .then((data) => {
+            localStorage.setItem("token", data.token);
+            window.location = "/menu"; // Redirect after successful sign-in
+        })
+        .catch((error) => {
+            setError("Sign-in failed. Please check your credentials."); // Error handling
+            console.error("Sign-in error:", error);
+        });
+    };
 
     return(
         <div>
@@ -30,54 +62,35 @@ function Signin(){
                     padding: 20,
                 }}>
                     <TextField 
-                    fullWidth={true} 
-                    id="outlined-basic" 
-                    onChange={(e) => {
-                        setEmail(e.target.value);
-                    }}
-
-                    label="Email" 
-                    variant="outlined" />
+                        fullWidth={true} 
+                        id="email"
+                        label="Email" 
+                        variant="outlined" 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
                     <br/><br/>
                     
                     <TextField 
-                    fullWidth={true} 
-                    id="outlined-basic"
-                    onChange={(e) => {
-                        setPassword(e.target.value);
-                    }}
-                    
-                    
-                    label="Password" 
-                    variant="outlined" 
-                    type="password" />
+                        fullWidth={true} 
+                        id="password"
+                        label="Password" 
+                        variant="outlined" 
+                        type="password" 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
                     <br/><br/>
 
-                    <Button 
-                    size="large" 
-                    variant="contained"
-                    
-                    onClick={() => {
-                        fetch("http://localhost:3000/admin/login", {
-                            method: "POST",
-                            
-                            body: JSON.stringify({
-                                "username": email,
-                                "password": password,
-                            }),
-                            
-                            headers: {
-                                "Content-type": "application/json"
-                            }
-                        }).then((resp) => {
-                            return resp.json().then((data) => {
-                                localStorage.setItem("token", data.token);
-                                window.location = "/menu";
-                            })
-                        })
-                    }}
+                    {error && <Typography color="error">{error}</Typography>} {/* Error display */}
 
-                    >Sign In</Button>
+                    <Button 
+                        size="large" 
+                        variant="contained"
+                        onClick={handleSignIn} // Use a separate function for clarity
+                    >
+                        Sign In
+                    </Button>
                 
                 </Card>
 

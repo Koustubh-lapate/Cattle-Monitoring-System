@@ -7,6 +7,41 @@ import { useState } from "react";
 function Signup(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState(null);
+
+    const handleSignup = () => {
+        // Input validation
+        if (!email || !password) {
+            setError("Please fill in all fields");
+            return;
+        }
+
+        // Signup request
+        fetch("http://localhost:3000/admin/signup", {
+            method: "POST",
+            body: JSON.stringify({
+                username: email,
+                password: password
+            }),
+            headers: {
+                "Content-type": "application/json"
+            }
+        })
+        .then((resp) => {
+            if (!resp.ok) {
+                throw new Error("Signup failed");
+            }
+            return resp.json();
+        })
+        .then((data) => {
+            localStorage.setItem("token", data.token);
+            window.location = "/menu"; // Redirect after successful signup
+        })
+        .catch((error) => {
+            setError("Signup failed. Please try again."); // Error handling
+            console.error("Signup error:", error);
+        });
+    };
 
     return(
         <div>
@@ -32,11 +67,11 @@ function Signup(){
                     <TextField 
                     fullWidth={true} 
                     label="Email" 
-
+                    value={email}
                     onChange={(e) => {
-                        setEmail(e.target.value)
+                        setEmail(e.target.value);
+                        setError(null); // Clear previous errors
                     }}
-
                     variant="outlined" />
                     
                     <br/><br/>
@@ -44,40 +79,22 @@ function Signup(){
                     <TextField 
                     fullWidth={true} 
                     label="Password" 
-                    
+                    value={password}
                     onChange={(e) => {
-                        setPassword(e.target.value)
+                        setPassword(e.target.value);
+                        setError(null); // Clear previous errors
                     }}
-
                     variant="outlined" 
                     type="password" />
                     
                     <br/><br/>
 
+                    {error && <Typography color="error">{error}</Typography>} {/* Error display */}
+
                     <Button 
                     size="large" 
                     variant="contained"
-                    
-                    onClick={() => {
-                        fetch("http://localhost:3000/admin/signup", {
-                            method: "POST",
-                            
-                            body: JSON.stringify({
-                                username: email,
-                                password: password
-                            }),
-
-                            headers: {
-                                "Content-type": "application/json"
-                            }
-
-                        }).then((resp) => {
-                            return resp.json().then((data) => {
-                                localStorage.setItem("token", data.token);
-                                window.location = "/menu";
-                            })
-                        })
-                    }}
+                    onClick={handleSignup} // Use a separate function for clarity
                     
                     >Sign Up</Button>
                 
