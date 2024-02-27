@@ -46,14 +46,14 @@ function Signup(){
     return(
         <div>
             <div style={{
-                paddingTop: 100,
+                paddingTop: 60,
                 marginBottom: 10,
                 display: "flex",
                 justifyContent: "center"
             }}>
 
                 <Typography variant="h6">
-                <b>Welcome to Cattle Monitoring System! Sign Up below</b>
+                <b>Welcome to Cattle Monitoring System!</b>
                 </Typography>
 
             </div>

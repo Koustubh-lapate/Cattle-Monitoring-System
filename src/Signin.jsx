@@ -43,7 +43,7 @@ function Signin(){
     return(
         <div>
             <div style={{
-                paddingTop: 100,
+                paddingTop: 60,
                 marginBottom: 10,
                 display: "flex",
                 justifyContent: "center"
