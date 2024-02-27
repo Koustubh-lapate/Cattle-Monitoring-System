@@ -59,7 +59,7 @@ function Signup(){
                     variant="contained"
                     
                     onClick={() => {
-                        fetch("http://localhost:3000/user/signup", {
+                        fetch("http://localhost:3000/admin/signup", {
                             method: "POST",
                             
                             body: JSON.stringify({

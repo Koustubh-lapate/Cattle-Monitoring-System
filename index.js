@@ -16,7 +16,7 @@ app.use(_json());
 const secret = 'my-secret-key';
 
 //define mongoose schemas
-const userSchema = new Schema({
+const adminSchema = new Schema({
     username: String,
     password: String
 });
@@ -29,7 +29,7 @@ const cowSchema = new Schema({
 });
 
 //define mongoose models
-const User = model('User', userSchema);
+const Admin = model('User', userSchema);
 const Cow = model('Cow', cowSchema);
 
 const authenticateJwt = (req, res, next) => {
@@ -56,7 +56,7 @@ const authenticateJwt = (req, res, next) => {
 connect('mongodb+srv://koustubhlap:kond018@koustubh18.qmw1c9a.mongodb.net/', {dbName: "CattleMonitoringSystem"});
 
 //routes
-app.get('user/me', authenticateJwt, (req, res) => {
+app.get('admin/me', authenticateJwt, (req, res) => {
     const username = req.user.username;
 
     res.json({
@@ -67,34 +67,34 @@ app.get('user/me', authenticateJwt, (req, res) => {
 app.post('/user/signup', (req, res) => {
     const {username, password} = req.body;
 
-    function callback(user){
-        if(user){
-            res.status(403).json({message: 'User already exists'});
+    function callback(admin){
+        if(admin){
+            res.status(403).json({message: 'Admin already exists'});
         }
 
         else{
             const obj = {username: username, password: password};
-            const newUser = new User(obj);
-            newUser.save();
-            const token = sign({username, role: 'user'}, secret, {expiresIn: '1h'});
-            res.json({message: 'User created successfully', token});
+            const newAdmin = new Admin(obj);
+            newAdmin.save();
+            const token = sign({username, role: 'admin'}, secret, {expiresIn: '1h'});
+            res.json({message: 'Admin created successfully', token});
         }
     }
 
-    User.findOne({username}).then(callback);
+    Admin.findOne({username}).then(callback);
 });
 
-app.post('/user/login', async (req, res) => {
+app.post('/admin/login', async (req, res) => {
     const {username, password} = req.body;
-    const user = await User.findOne({username, password});
+    const admin = await Admin.findOne({username, password});
 
-    if(user){
+    if(admin){
         const token = sign({username, role: 'user'}, secret, {expiresIn: '1h'});
-        res.json({message: 'User logged in successfully', token});
+        res.json({message: 'Admin logged in successfully', token});
     }
 
     else{
-        res.status(403).json({message: 'Invalid useremail or password'});
+        res.status(403).json({message: 'Invalid username or password'});
     }
 });
 

@@ -7,7 +7,7 @@ function Appbar(){
     const [userEmail, setUserEmail] = useState(null);
 
     useEffect(() => {
-        fetch("http://localhost:3000/user/me", {
+        fetch("http://localhost:3000/admin/me", {
             method: "GET", 
             
             headers: {
