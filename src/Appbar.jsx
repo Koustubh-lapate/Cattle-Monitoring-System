@@ -32,13 +32,13 @@ function Appbar(){
         }}>
 
             <div style={{marginLeft: 10}}>
-                <Typography variant="h6"><b>Course Khazana</b></Typography>
+                <Typography variant="h6"><b>Cattle Monitoring System</b></Typography>
             </div>
             
             <div style={{display: "flex"}}>
                 
                 <div style={{marginRight: 10}}>
-                    <Typography variant="h6"><b>Hi Admin!</b></Typography>
+                    <Typography variant="h6"><b>Hi User!</b></Typography>
                 </div>
     
                 <div>
@@ -63,7 +63,7 @@ function Appbar(){
         padding: 4
     }}>
         <div style={{marginLeft: 10}}>
-            <Typography variant="h6"><b>Course Khazana</b></Typography>
+            <Typography variant="h6"><b>Cattle Monitoring System</b></Typography>
         </div>
         
         <div style={{display: "flex"}}>
