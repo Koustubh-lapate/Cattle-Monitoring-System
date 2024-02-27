@@ -53,7 +53,7 @@ function Signup(){
             }}>
 
                 <Typography variant="h6">
-                <b>Welcome to Cattle Monitoring System!</b>
+                <b>Sign Up Below!</b>
                 </Typography>
 
             </div>
