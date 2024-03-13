@@ -20,6 +20,8 @@ function App(){
                     <Route path="/login" element={<Signin />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/menu" element={<Menu />} />
+                    <Route path="/uploadImage" element={<UploadImage />} />
+                    <Route path="/cows" element={<Cows />} />
                 </Routes>
 
             </Router>
