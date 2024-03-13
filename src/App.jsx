@@ -3,6 +3,8 @@ import Signup from "./Signup";
 import Signin from "./Signin";
 import Appbar from "./Appbar";
 import Menu from "./Menu";
+import Cows from "./Cows";
+import UploadImage from "./UploadImage";
 
 function App(){
     return(
