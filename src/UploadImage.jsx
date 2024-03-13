@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, TextField, Typography, Card } from "@mui/material";
 import { useState } from "react";
 
 function UploadImage(){
