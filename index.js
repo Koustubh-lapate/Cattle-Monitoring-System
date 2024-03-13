@@ -22,10 +22,11 @@ const adminSchema = new Schema({
 });
 
 const cowSchema = new Schema({
-    id: Number,
+    cow_id: Number,
     tempData: Number,
     milkProductionData: Number,
-    StepsData: Number
+    StepsData: Number,
+    imageLink: String
 });
 
 //define mongoose models
@@ -96,6 +97,36 @@ app.post('/admin/login', async (req, res) => {
     else{
         res.status(403).json({message: 'Invalid username or password'});
     }
+});
+
+app.post('/cow/imageData', authenticateJwt, async (req, res) => {
+    try {
+        // Validate input
+        if (!req.body.cow_id || !req.body.imageLink) {
+            return res.status(400).json({ message: "Missing cow_id or imageLink in request body" });
+        }
+
+        // Search for cow with the provided cow_id
+        const cow = await Cow.findOne({ cow_id: req.body.cow_id });
+
+        if (!cow) {
+            return res.status(404).json({ message: "Cow not found" });
+        }
+
+        // Update the imageLink field
+        cow.imageLink = req.body.imageLink;
+
+        // Save the updated cow document
+        await cow.save();
+
+        return res.status(200).json({ message: "Image data added successfully" });
+    } 
+    
+    catch (error) {
+        console.error("Error adding image data:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+    
 });
 
 app.listen(port, () => {
