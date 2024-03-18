@@ -129,6 +129,17 @@ app.post('/cow/imageData', authenticateJwt, async (req, res) => {
     
 });
 
+app.get('/cowsData', authenticateJwt, async (req, res) => {
+    try{
+        const cows = await Cow.find({}, '-imageLink');
+        res.json({cows});
+    }
+
+    catch(error){
+        res.status(500).json({error: 'Internal Server Error'});
+    }
+})
+
 app.listen(port, () => {
     console.log('Cattle Monitoring System backend server listening on port 3000');
 });
