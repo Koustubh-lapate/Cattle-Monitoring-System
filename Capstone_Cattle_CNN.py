@@ -78,9 +78,9 @@ def predict_image(image_path):
     img = preprocess_image(image_path)
     prediction = loaded_model.predict(np.expand_dims(img, axis=0))[0][0]
     if prediction > 0.5:
-        print("Lumpy skin disease detected!")
+        return "Lumpy skin disease detected!"
     else:
-        print("Normal skin.")
+        return "Normal skin!"
 
 #%%   
 # Example Usage

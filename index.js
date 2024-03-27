@@ -26,7 +26,8 @@ const cowSchema = new Schema({
     tempData: Number,
     milkProductionData: Number,
     StepsData: Number,
-    imageLink: String
+    imageLink: String,
+    prediction: String
 });
 
 //define mongoose models
@@ -99,6 +100,8 @@ app.post('/admin/login', async (req, res) => {
     }
 });
 
+const { spawn } = require('child_process');
+
 app.post('/cow/imageData', authenticateJwt, async (req, res) => {
     try {
         // Validate input
@@ -113,20 +116,32 @@ app.post('/cow/imageData', authenticateJwt, async (req, res) => {
             return res.status(404).json({ message: "Cow not found" });
         }
 
-        // Update the imageLink field
-        cow.imageLink = req.body.imageLink;
+        // Execute the Python script using child_process.spawn
+        const pythonProcess = spawn('python', ['/Users/koustubhlapate/Documents/repos/Cattle-Monitoring-System/Capstone_Cattle_CNN.py', req.body.imageLink]);
 
-        // Save the updated cow document
-        await cow.save();
+        // Handle data from Python script
+        pythonProcess.stdout.on('data', (data) => {
+            const prediction = data.toString().trim(); // Assuming the prediction is sent back as stdout from the Python script
+            // Update the cow document with the prediction
+            cow.prediction = prediction;
+            // Save the updated cow document
+            cow.save().then(() => {
+                return res.status(200).json({ message: "Image data processed successfully", prediction });
+            }).catch((error) => {
+                console.error("Error saving cow document:", error);
+                return res.status(500).json({ message: "Internal server error" });
+            });
+        });
 
-        return res.status(200).json({ message: "Image data added successfully" });
-    } 
-    
-    catch (error) {
-        console.error("Error adding image data:", error);
+        pythonProcess.stderr.on('data', (data) => {
+            console.error("Error processing image data:", data.toString());
+            return res.status(500).json({ message: "Internal server error" });
+        });
+
+    } catch (error) {
+        console.error("Error processing image data:", error);
         return res.status(500).json({ message: "Internal server error" });
     }
-    
 });
 
 app.get('/cowsData', authenticateJwt, async (req, res) => {
