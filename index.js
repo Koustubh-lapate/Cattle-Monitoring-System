@@ -153,7 +153,7 @@ app.get('/cowsData', authenticateJwt, async (req, res) => {
     catch(error){
         res.status(500).json({error: 'Internal Server Error'});
     }
-})
+});
 
 app.listen(port, () => {
     console.log('Cattle Monitoring System backend server listening on port 3000');
