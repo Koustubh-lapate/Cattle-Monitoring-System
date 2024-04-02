@@ -143,37 +143,6 @@ app.post('/cow/imageData', authenticateJwt, async (req, res) => {
     }
 });
 
-// Route to handle Arduino data
-app.post('/arduino/data', async (req, res) => {
-    try {
-        const { cow_id, milk_production } = req.body;
-        const cow = new Cow({ cow_id, milkProductionData: milk_production });
-        await cow.save();
-        res.status(200).json({ message: "Arduino data received and stored successfully" });
-    } catch (error) {
-        console.error("Error processing Arduino data:", error);
-        res.status(500).json({ message: "Internal server error" });
-    }
-});
-
-// Route to handle ESP32 data
-app.post('/esp32/data', async (req, res) => {
-    try {
-        const { cow_id, temperature, step_count } = req.body;
-        const cow = await Cow.findOne({ cow_id });
-        if (!cow) {
-            return res.status(404).json({ message: "Cow not found" });
-        }
-        cow.tempData = temperature;
-        cow.StepsData = step_count;
-        await cow.save();
-        res.status(200).json({ message: "ESP32 data received and stored successfully" });
-    } catch (error) {
-        console.error("Error processing ESP32 data:", error);
-        res.status(500).json({ message: "Internal server error" });
-    }
-});
-
 app.get('/cowsData', authenticateJwt, async (req, res) => {
     try{
         const cows = await Cow.find({}, '-imageLink');
