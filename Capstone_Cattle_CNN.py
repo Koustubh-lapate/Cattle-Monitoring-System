@@ -110,5 +110,3 @@ predict_image("C:/Users/Lokeswar K/Desktop/Lumpy3.jpg")
 #     else:
 #         normal_count+=1
 #%%
-
-    

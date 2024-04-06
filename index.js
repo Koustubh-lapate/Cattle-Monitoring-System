@@ -105,8 +105,21 @@ app.post('/admin/login', async (req, res) => {
 app.post('/arduino/data', async (req, res) => {
     try {
         const { cow_id, milk_production } = req.body;
-        const cow = new Cow({ cow_id, milkProductionData: milk_production });
+
+        // Check if a cow with the same ID exists
+        let cow = await Cow.findOne({ cow_id });
+
+        if (cow) {
+            // Update the existing cow document
+            cow.milkProductionData = milk_production;
+        } else {
+            // Create a new cow document
+            cow = new Cow({ cow_id, milkProductionData: milk_production });
+        }
+
+        // Save the cow document
         await cow.save();
+
         res.status(200).json({ message: "Arduino data received and stored successfully" });
     } catch (error) {
         console.error("Error processing Arduino data:", error);
@@ -118,13 +131,24 @@ app.post('/arduino/data', async (req, res) => {
 app.post('/esp32/data', async (req, res) => {
     try {
         const { cow_id, temperature, step_count } = req.body;
-        const cow = await Cow.findOne({ cow_id });
+
+        // Check if a cow with the same ID exists
+        let cow = await Cow.findOne({ cow_id });
+
         if (!cow) {
-            return res.status(404).json({ message: "Cow not found" });
+            // If cow does not exist, create a new entry
+            cow = new Cow({ cow_id });
         }
-        cow.tempData = temperature;
-        cow.StepsData = step_count;
+
+        else{
+            // Update the cow document
+            cow.tempData = temperature;
+            cow.StepsData = step_count;
+        }
+
+        // Save the cow document
         await cow.save();
+
         res.status(200).json({ message: "ESP32 data received and stored successfully" });
     } catch (error) {
         console.error("Error processing ESP32 data:", error);
