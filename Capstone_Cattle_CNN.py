@@ -12,6 +12,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import load_model
+
 #%%
 # Data Preparation
 data_dir = 'D:/Capstone_Cattle/Datset/Lumpy Skin Images Dataset'
@@ -81,6 +82,30 @@ def predict_image(image_path):
         return "Lumpy skin disease detected!"
     else:
         return "Normal skin!"
+
+
+from PIL import Image   
+# Modified function will take image as input
+def predict_image1(img):
+    # img = image.load_img(image_path, target_size=(img_width, img_height))
+    # Open an image file
+    # image = Image.open("input_image.jpg")
+
+    # Define the new size (width, height)
+    new_size = (img_width, img_height)
+
+    # Resize the image
+    resized_image = img.resize(new_size)
+
+    img_array = image.img_to_array(img) / 255.0
+    prediction = loaded_model.predict(np.expand_dims(img, axis=0))[0][0]
+    if prediction > 0.5:
+        return "Lumpy skin disease detected!"
+    else:
+        return "Normal skin!"
+
+# Save the resized image
+resized_image.save("resized_image.jpg")
 
 #%%   
 # Example Usage

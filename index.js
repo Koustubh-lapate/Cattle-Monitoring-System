@@ -23,9 +23,9 @@ const adminSchema = new Schema({
 });
 
 const cowSchema = new Schema({
-    cow_id: String,
+    cow_id: Number,
     tempData: Number,
-    milkProductionData: String,
+    milkProductionData: Number,
     StepsData: Number,
     imageLink: String,
     prediction: String
