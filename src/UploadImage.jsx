@@ -1,24 +1,29 @@
 import { Button, TextField, Typography, Card, CircularProgress } from "@mui/material";
 import { useState } from "react";
 
-function UploadImage(){
+function UploadImage() {
     const [cowId, setCowId] = useState(0);
-    const [image, setImage] = useState("");
+    const [image, setImage] = useState(null); // Changed to null to hold file object instead of link
     const [prediction, setPrediction] = useState("");
     const [submitted, setSubmitted] = useState(false); // State variable to track if data has been submitted
     const [loading, setLoading] = useState(false); // State variable to track loading state
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+    };
+
     const handleUpload = () => {
         setLoading(true); // Set loading to true when upload begins
 
+        const formData = new FormData();
+        formData.append("cow_id", cowId);
+        formData.append("image", image);
+
         fetch("http://localhost:3000/cow/imageData", {
             method: "POST",
-            body: JSON.stringify({
-                cow_id: cowId,
-                imageLink: image
-            }),
+            body: formData,
             headers: {
-                "Content-Type": "application/json",
                 "Authorization": "Bearer " + localStorage.getItem("token")
             }
         })
@@ -41,7 +46,7 @@ function UploadImage(){
         });
     };
 
-    return(
+    return (
         <div>
             <div style={{
                 paddingTop: 20,
@@ -65,7 +70,7 @@ function UploadImage(){
 
             {/* Conditionally render input fields based on 'submitted' state */}
             {!submitted && !loading && (
-                <div style={{display: "flex", justifyContent: "center"}}>
+                <div style={{ display: "flex", justifyContent: "center" }}>
 
                     <Card variant="outlined" style={{
                         width: 400,
@@ -73,32 +78,45 @@ function UploadImage(){
                     }}>
 
                         <TextField
-                        fullWidth={true}
-                        id="outlined-basic"
-                        onChange={(e) => {
-                            setCowId(e.target.value);
-                        }}
+                            fullWidth={true}
+                            id="outlined-basic"
+                            onChange={(e) => {
+                                setCowId(e.target.value);
+                            }}
+                            label="Cow ID"
+                            variant="outlined"
+                        />
+                        <br /><br />
 
-                        label="Cow ID"
-                        variant="outlined" />
-                        <br/><br/>
+                        {/* Input field for image upload */}
+                        <input
+                            accept="image/*"
+                            style={{ display: 'none' }}
+                            id="upload-image"
+                            multiple={false}
+                            type="file"
+                            onChange={handleImageChange}
+                        />
+                        <label htmlFor="upload-image">
+                            <Button
+                                variant="contained"
+                                component="span"
+                                size="large"
+                            >
+                                Upload Image
+                            </Button>
+                        </label>
 
-                        <TextField
-                        fullWidth={true}
-                        id="outlined-basic"
-                        onChange={(e) => {
-                            setImage(e.target.value);
-                        }}
-
-                        label="Image Link"
-                        variant="outlined" />
-                        <br/><br/>
-
-                        <Button
-                        size="large"
-                        variant="contained"
-                        onClick={handleUpload}
-                        >Upload Image</Button>
+                        {/* Display selected image */}
+                        {image && (
+                            <div style={{ marginTop: 20 }}>
+                                <img
+                                    src={URL.createObjectURL(image)}
+                                    alt="Uploaded"
+                                    style={{ maxWidth: '100%', maxHeight: '300px' }}
+                                />
+                            </div>
+                        )}
 
                     </Card>
 
@@ -113,7 +131,7 @@ function UploadImage(){
             )}
 
         </div>
-    )
+    );
 }
 
 export default UploadImage;
