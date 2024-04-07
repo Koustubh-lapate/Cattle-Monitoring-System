@@ -5,6 +5,7 @@ import Appbar from "./Appbar";
 import Menu from "./Menu";
 import Cows from "./Cows";
 import UploadImage from "./UploadImage";
+import Analysis from "./Analysis";
 
 function App(){
     return(
@@ -24,6 +25,7 @@ function App(){
                     <Route path="/menu" element={<Menu />} />
                     <Route path="/uploadImage" element={<UploadImage />} />
                     <Route path="/cows" element={<Cows />} />
+                    <Route path="/cowsAnalysis" element={<Analysis />} />
                 </Routes>
 
             </Router>
