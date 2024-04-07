@@ -20,11 +20,11 @@ function UploadImage() {
         formData.append("cow_id", cowId);
         formData.append("image", image);
 
-        fetch("backend route", {
+        fetch("http://localhost:3000/cow/imageData", { // Replace with your backend route URL
             method: "POST",
             body: formData,
             headers: {
-                "Authorization": "Bearer " + localStorage.getItem("token")
+                // "Authorization": "Bearer " + localStorage.getItem("token") // Include authorization header if needed
             }
         })
         .then((response) => {
