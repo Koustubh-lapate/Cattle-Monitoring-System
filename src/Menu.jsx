@@ -26,11 +26,11 @@ function Menu(){
           minHeight: 100,
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center', // Align items in the center
+          alignItems: 'center', 
         }}
       >
         <Button
-          style={{ marginBottom: 10 }} // Add margin to separate the buttons
+          style={{ marginBottom: 10 }} 
           size="large"
           variant="contained"
           onClick={() => {
@@ -41,6 +41,7 @@ function Menu(){
         </Button>
 
         <Button
+          style={{ marginBottom: 10 }}
           size="large"
           variant="contained"
           onClick={() => {
