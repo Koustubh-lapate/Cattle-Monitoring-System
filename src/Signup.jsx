@@ -52,7 +52,7 @@ function Signup(){
                 justifyContent: "center"
             }}>
 
-                <Typography variant="h6">
+                <Typography variant="h6" style={{color: "black"}}>
                 <b>Sign Up Below!</b>
                 </Typography>
 

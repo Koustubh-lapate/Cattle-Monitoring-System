@@ -49,7 +49,7 @@ function Signin(){
                 justifyContent: "center"
             }}>
 
-                <Typography variant="h6">
+                <Typography variant="h6" style={{color: "black"}}>
                 <b>Welcome Back! Sign In below</b>
                 </Typography>
 
