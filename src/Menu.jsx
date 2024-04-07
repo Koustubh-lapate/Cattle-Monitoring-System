@@ -47,8 +47,19 @@ function Menu(){
             window.location = "/cows";
           }}
         >
-          View Cows
+          View Cows RealTime Data
         </Button>
+
+        <Button
+          size="large"
+          variant="contained"
+          onClick={() => {
+            window.location = "/cowsAnalysis";
+          }}
+        >
+          View Cows Data Analysis
+        </Button>
+
       </Card>
     </div>
   </div>
