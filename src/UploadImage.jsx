@@ -20,7 +20,7 @@ function UploadImage() {
         formData.append("cow_id", cowId);
         formData.append("image", image);
 
-        fetch("http://localhost:3000/cow/imageData", {
+        fetch("backend route", {
             method: "POST",
             body: formData,
             headers: {
@@ -115,6 +115,19 @@ function UploadImage() {
                                     alt="Uploaded"
                                     style={{ maxWidth: '100%', maxHeight: '300px' }}
                                 />
+                            </div>
+                        )}
+
+                        {/* Submit button */}
+                        {image && (
+                            <div style={{ marginTop: 20 }}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={handleUpload}
+                                >
+                                    Submit
+                                </Button>
                             </div>
                         )}
 
